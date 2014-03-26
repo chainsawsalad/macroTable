@@ -935,6 +935,11 @@
     for(i = rowElements.length; i--;) {
       rowData = rowElements[i].rowData = rowElements[i].rowData || {};
 
+      //might have resized column that causes the contents to wrap, which would increase the height of the row
+      if (rowData.calculatedHeight !== rowElements[i].dynamicRow.height() || rowData.calculatedHeight !== rowElements[i].staticRow.height()) {
+        rowData.calculatedHeight = 0;
+      }
+
       if(rowData.calculatedHeight) {
         delete rowElements[i].rowData; //already calculated, skip to save performance hit
         continue;
